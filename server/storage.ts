@@ -47,6 +47,83 @@ export class MemStorage implements IStorage {
     this.medicines = new Map();
     this.patientProfiles = new Map();
     this.medicineReminders = new Map();
+    
+    // Add sample patient requests for demonstration
+    this.initializeSampleData();
+  }
+
+  private initializeSampleData() {
+    // Sample patient requests
+    const sampleRequests = [
+      {
+        id: "sample-1",
+        patientName: "Maria Santos",
+        symptom: "High fever and headache for 2 days. Difficulty sleeping and loss of appetite.",
+        status: "pending" as const,
+        timestamp: Date.now() - 45 * 60 * 1000, // 45 minutes ago
+      },
+      {
+        id: "sample-2", 
+        patientName: "Carlos Rodriguez",
+        symptom: "Persistent cough with chest congestion. Started 3 days ago after exposure to cold weather.",
+        status: "replied" as const,
+        timestamp: Date.now() - 2 * 60 * 60 * 1000, // 2 hours ago
+        doctorReply: "Please take warm fluids and avoid cold exposure. Monitor symptoms and contact if worsens.",
+        replyTimestamp: Date.now() - 1 * 60 * 60 * 1000, // 1 hour ago
+      },
+      {
+        id: "sample-3",
+        patientName: "Ana Lopez",
+        symptom: "Severe stomach pain and nausea after eating. Pain is sharp and located in upper abdomen.",
+        status: "urgent" as const,
+        timestamp: Date.now() - 15 * 60 * 1000, // 15 minutes ago
+      },
+      {
+        id: "sample-4",
+        patientName: "Roberto García", 
+        symptom: "Feeling dizzy and lightheaded when standing up. Blood pressure seems irregular.",
+        status: "pending" as const,
+        timestamp: Date.now() - 3 * 60 * 60 * 1000, // 3 hours ago
+      },
+      {
+        id: "sample-5",
+        patientName: "Elena Morales",
+        symptom: "Chronic back pain getting worse. Difficulty walking and sleeping properly.",
+        status: "replied" as const,
+        timestamp: Date.now() - 4 * 60 * 60 * 1000, // 4 hours ago
+        doctorReply: "Please apply heat therapy and avoid heavy lifting. Schedule a follow-up if pain persists.",
+        replyTimestamp: Date.now() - 3.5 * 60 * 60 * 1000,
+      }
+    ];
+
+    // Add sample requests to storage
+    sampleRequests.forEach(request => {
+      this.patientRequests.set(request.id, request);
+    });
+
+    // Sample messages for chat
+    const sampleMessages = [
+      {
+        id: "msg-1",
+        sender: "patient" as const,
+        senderName: "Maria Santos",
+        message: "Doctor, I'm feeling very unwell today",
+        timestamp: Date.now() - 10 * 60 * 1000,
+        patientId: "sample-1"
+      },
+      {
+        id: "msg-2", 
+        sender: "doctor" as const,
+        senderName: "Dr. Johnson",
+        message: "I understand your concern. Can you describe your symptoms?",
+        timestamp: Date.now() - 8 * 60 * 1000,
+        patientId: "sample-1"
+      }
+    ];
+
+    sampleMessages.forEach(message => {
+      this.messages.set(message.id, message);
+    });
   }
 
   async getUser(id: string): Promise<User | undefined> {
