@@ -8,11 +8,11 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  createPatientRequest(request: InsertPatientRequest): Promise<PatientRequest>;
+  createPatientRequest(request: InsertPatientRequest): Promise<PatientRequest & { id: string }>;
   updatePatientReply(id: string, reply: string): Promise<void>;
-  getAllPatientRequests(): Promise<PatientRequest[]>;
-  createMessage(message: InsertMessage): Promise<Message>;
-  getAllMessages(): Promise<Message[]>;
+  getAllPatientRequests(): Promise<(PatientRequest & { id: string })[]>;
+  createMessage(message: InsertMessage): Promise<Message & { id: string }>;
+  getAllMessages(): Promise<(Message & { id: string })[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -43,14 +43,14 @@ export class MemStorage implements IStorage {
     return user;
   }
 
-  async createPatientRequest(request: InsertPatientRequest): Promise<PatientRequest> {
+  async createPatientRequest(request: InsertPatientRequest): Promise<PatientRequest & { id: string }> {
     const id = randomUUID();
     const patientRequest: PatientRequest = {
       ...request,
       timestamp: Date.now()
     };
     this.patientRequests.set(id, patientRequest);
-    return patientRequest;
+    return { ...patientRequest, id };
   }
 
   async updatePatientReply(id: string, reply: string): Promise<void> {
@@ -66,23 +66,25 @@ export class MemStorage implements IStorage {
     }
   }
 
-  async getAllPatientRequests(): Promise<PatientRequest[]> {
-    return Array.from(this.patientRequests.values())
+  async getAllPatientRequests(): Promise<(PatientRequest & { id: string })[]> {
+    return Array.from(this.patientRequests.entries())
+      .map(([id, request]) => ({ ...request, id }))
       .sort((a, b) => b.timestamp - a.timestamp);
   }
 
-  async createMessage(message: InsertMessage): Promise<Message> {
+  async createMessage(message: InsertMessage): Promise<Message & { id: string }> {
     const id = randomUUID();
     const newMessage: Message = {
       ...message,
       timestamp: Date.now()
     };
     this.messages.set(id, newMessage);
-    return newMessage;
+    return { ...newMessage, id };
   }
 
-  async getAllMessages(): Promise<Message[]> {
-    return Array.from(this.messages.values())
+  async getAllMessages(): Promise<(Message & { id: string })[]> {
+    return Array.from(this.messages.entries())
+      .map(([id, message]) => ({ ...message, id }))
       .sort((a, b) => a.timestamp - b.timestamp);
   }
 }

@@ -46,13 +46,13 @@ export default function DoctorDashboard({ doctorName, onLogout }: DoctorDashboar
 
   // Mutation for simulating calls
   const simulateCallMutation = useMutation({
-    mutationFn: (data: any) => apiRequest('/api/simulate-call', 'POST', data),
+    mutationFn: (data: any) => apiRequest('POST', '/api/simulate-call', data),
     onSuccess: () => {
       toast({
         title: "New Patient Request",
         description: "Emergency consultation request received",
       });
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ['/api/messages'] });
     },
     onError: () => {
       toast({
@@ -83,7 +83,7 @@ export default function DoctorDashboard({ doctorName, onLogout }: DoctorDashboar
   // Mutation for sending replies
   const replyMutation = useMutation({
     mutationFn: (data: { patientId: string, doctorReply: string }) => 
-      apiRequest('/api/reply', 'POST', data),
+      apiRequest('POST', '/api/reply', data),
     onSuccess: () => {
       if (selectedPatient) {
         toast({
@@ -94,7 +94,7 @@ export default function DoctorDashboard({ doctorName, onLogout }: DoctorDashboar
       setIsReplyDialogOpen(false);
       setReplyText("");
       setSelectedPatient(null);
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ['/api/messages'] });
     },
     onError: () => {
       toast({
