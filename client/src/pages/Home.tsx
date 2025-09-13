@@ -18,7 +18,7 @@ export default function Home() {
           <div>
             <h1 className="text-4xl font-bold text-foreground">MediConnect</h1>
             <p className="text-xl text-muted-foreground mt-2">
-              Telemedicine Platform for Rural Communities
+              Telemedicine Platform for Semi-Urban Communities
             </p>
             <p className="text-muted-foreground max-w-2xl mx-auto mt-4">
               Connecting patients in remote areas with healthcare professionals through 
