@@ -1,4 +1,4 @@
-# VillageCare Telemedicine Platform Design Guidelines
+# MediConnect Telemedicine Platform Design Guidelines
 
 ## Design Approach
 **System-Based Approach**: Using design principles inspired by healthcare platforms like Teladoc and Amwell, prioritizing clarity, trust, and professional medical interface standards. The design emphasizes utility and reliability over visual flair, appropriate for healthcare applications.
@@ -32,7 +32,7 @@
 ### D. Component Library
 
 **Navigation:**
-- Clean header with VillageCare logo and user profile
+- Clean header with MediConnect logo and user profile
 - Sidebar navigation for doctor dashboard sections
 - Breadcrumb navigation for multi-step processes
 

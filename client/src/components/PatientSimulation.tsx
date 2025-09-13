@@ -71,7 +71,7 @@ export default function PatientSimulation({ doctorPhoneNumber = "+1234567890" }:
               <User className="h-8 w-8 text-primary-foreground" />
             </div>
           </div>
-          <h1 className="text-2xl font-semibold">VillageCare</h1>
+          <h1 className="text-2xl font-semibold">MediConnect</h1>
           <p className="text-muted-foreground">Patient App Demo</p>
         </div>
 

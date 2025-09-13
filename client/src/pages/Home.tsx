@@ -16,7 +16,7 @@ export default function Home() {
             </div>
           </div>
           <div>
-            <h1 className="text-4xl font-bold text-foreground">VillageCare</h1>
+            <h1 className="text-4xl font-bold text-foreground">MediConnect</h1>
             <p className="text-xl text-muted-foreground mt-2">
               Telemedicine Platform for Rural Communities
             </p>

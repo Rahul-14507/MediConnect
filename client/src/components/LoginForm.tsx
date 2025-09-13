@@ -24,7 +24,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
     if (username === "doctor" && password === "password") {
       toast({
         title: "Login successful",
-        description: "Welcome to VillageCare Dashboard",
+        description: "Welcome to MediConnect Dashboard",
       });
       onLogin(username);
     } else {
@@ -48,7 +48,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
             </div>
           </div>
           <div>
-            <CardTitle className="text-2xl font-semibold">VillageCare</CardTitle>
+            <CardTitle className="text-2xl font-semibold">MediConnect</CardTitle>
             <CardDescription>Doctor Dashboard Login</CardDescription>
           </div>
         </CardHeader>

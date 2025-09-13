@@ -161,7 +161,7 @@ export default function DoctorDashboard({ doctorName, onLogout }: DoctorDashboar
                 <Activity className="h-6 w-6 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-xl font-semibold">VillageCare Dashboard</h1>
+                <h1 className="text-xl font-semibold">MediConnect Dashboard</h1>
                 <p className="text-sm text-muted-foreground">Welcome, Dr. {doctorName}</p>
               </div>
             </div>
