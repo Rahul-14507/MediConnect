@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { queryClient, apiRequest } from "@/lib/queryClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -28,59 +30,44 @@ interface DoctorDashboardProps {
 export default function DoctorDashboard({ doctorName, onLogout }: DoctorDashboardProps) {
   const { toast } = useToast();
   
-  // Mock data - todo: remove mock functionality
-  const [requests, setRequests] = useState<PatientRequest[]>([
-    {
-      id: "1",
-      patientName: "Maria Santos",
-      symptom: "High fever and headache for 2 days. Difficulty sleeping and loss of appetite.",
-      timestamp: Date.now() - 30 * 60 * 1000,
-      status: "urgent"
-    },
-    {
-      id: "2", 
-      patientName: "John Miller",
-      symptom: "Persistent cough and chest tightness for one week.",
-      timestamp: Date.now() - 45 * 60 * 1000,
-      status: "pending"
-    },
-    {
-      id: "3",
-      patientName: "Sarah Wilson", 
-      symptom: "Stomach pain and nausea after meals.",
-      timestamp: Date.now() - 2 * 60 * 60 * 1000,
-      status: "replied",
-      doctorReply: "Please avoid spicy foods and take the prescribed medication twice daily."
-    }
-  ]);
+  // Fetch patient requests from API
+  const { data: apiData, refetch } = useQuery({
+    queryKey: ['/api/messages'],
+    refetchInterval: 3000, // Refresh every 3 seconds for demo purposes
+  });
 
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: "1",
-      sender: "patient",
-      message: "Hello Doctor, I have been having a high fever and headache for 2 days now.",
-      timestamp: Date.now() - 15 * 60 * 1000,
-      senderName: "Maria Santos"
-    }
-  ]);
+  const requests: PatientRequest[] = (apiData as any)?.data?.patients || [];
+
+  const messages: ChatMessage[] = (apiData as any)?.data?.messages || [];
 
   const [selectedPatient, setSelectedPatient] = useState<PatientRequest | null>(null);
   const [replyText, setReplyText] = useState("");
   const [isReplyDialogOpen, setIsReplyDialogOpen] = useState(false);
 
+  // Mutation for simulating calls
+  const simulateCallMutation = useMutation({
+    mutationFn: (data: any) => apiRequest('/api/simulate-call', 'POST', data),
+    onSuccess: () => {
+      toast({
+        title: "New Patient Request",
+        description: "Emergency consultation request received",
+      });
+      refetch();
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to simulate patient call",
+        variant: "destructive"
+      });
+    }
+  });
+
   const handleSimulateCall = () => {
-    const newRequest: PatientRequest = {
-      id: Date.now().toString(),
-      patientName: "Emergency Patient",
+    simulateCallMutation.mutate({
+      patientName: "Emergency Patient", 
       symptom: "Urgent medical consultation needed - severe abdominal pain.",
-      timestamp: Date.now(),
       status: "urgent"
-    };
-    
-    setRequests(prev => [newRequest, ...prev]);
-    toast({
-      title: "New Patient Request",
-      description: "Emergency consultation request received",
     });
   };
 
@@ -93,34 +80,37 @@ export default function DoctorDashboard({ doctorName, onLogout }: DoctorDashboar
     }
   };
 
-  const handleSendReply = () => {
-    if (selectedPatient && replyText.trim()) {
-      setRequests(prev => 
-        prev.map(r => 
-          r.id === selectedPatient.id 
-            ? { ...r, doctorReply: replyText, status: "replied" as const }
-            : r
-        )
-      );
-      
-      // Add message to chat
-      const newMessage: ChatMessage = {
-        id: Date.now().toString(),
-        sender: "doctor",
-        message: replyText,
-        timestamp: Date.now(),
-        senderName: doctorName
-      };
-      setMessages(prev => [...prev, newMessage]);
-      
-      toast({
-        title: "Reply sent",
-        description: `Your message has been sent to ${selectedPatient.patientName}`,
-      });
-      
+  // Mutation for sending replies
+  const replyMutation = useMutation({
+    mutationFn: (data: { patientId: string, doctorReply: string }) => 
+      apiRequest('/api/reply', 'POST', data),
+    onSuccess: () => {
+      if (selectedPatient) {
+        toast({
+          title: "Reply sent",
+          description: `Your message has been sent to ${selectedPatient.patientName}`,
+        });
+      }
       setIsReplyDialogOpen(false);
       setReplyText("");
       setSelectedPatient(null);
+      refetch();
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to send reply",
+        variant: "destructive"
+      });
+    }
+  });
+
+  const handleSendReply = () => {
+    if (selectedPatient && replyText.trim()) {
+      replyMutation.mutate({
+        patientId: selectedPatient.id,
+        doctorReply: replyText
+      });
     }
   };
 
@@ -133,14 +123,11 @@ export default function DoctorDashboard({ doctorName, onLogout }: DoctorDashboar
   };
 
   const handleSendChatMessage = (message: string) => {
-    const newMessage: ChatMessage = {
-      id: Date.now().toString(),
-      sender: "doctor",
-      message,
-      timestamp: Date.now(),
-      senderName: doctorName
-    };
-    setMessages(prev => [...prev, newMessage]);
+    // For chat, we'll use the reply API with a general patient ID
+    replyMutation.mutate({
+      patientId: "general-chat",
+      doctorReply: message
+    });
   };
 
   const stats = {
