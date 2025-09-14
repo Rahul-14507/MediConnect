@@ -62,12 +62,42 @@ app.use((req, res, next) => {
   // Other ports are firewalled. Default to 5000 if not specified.
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || '5000', 10);
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
+    // ALWAYS serve the app on the port specified in the environment variable PORT
+  // Other ports are firewalled. Default to 5000 if not specified.
+  const port = parseInt(process.env.PORT || "5000", 10);
+  const host = process.env.HOST || "127.0.0.1"; // force IPv4 by default
+
+  // Add useful error handling and fallbacks (Windows doesn't like reusePort)
+  function startServerListen() {
+    server.listen(port, host, () => {
+      log(`serving on http://${host}:${port}`);
+    });
+  }
+
+  server.on("error", (err: any) => {
+    log(`server error: ${err?.code ?? err}`);
+    // Common recoverable cases: ENOTSUP (unsupported option), EADDRNOTAVAIL, EADDRINUSE
+    if (err.code === "ENOTSUP" || err.code === "EADDRNOTAVAIL") {
+      log("ENOTSUP/EADDRNOTAVAIL detected — retrying on 127.0.0.1 without special options...");
+      // try again forcing IPv4 and minimal options
+      try {
+        server.close?.();
+      } catch (_) {}
+      // Try binding explicitly to IPv4 address, without reusePort
+      server.listen(port, "127.0.0.1", () => {
+        log(`serving on http://127.0.0.1:${port} (fallback)`);
+      });
+      return;
+    }
+
+    if (err.code === "EADDRINUSE") {
+      log(`Port ${port} in use. Try a different PORT or kill the process using the port.`);
+    } else {
+      console.error(err);
+    }
   });
+
+  // Start listening
+  startServerListen();
+
 })();
