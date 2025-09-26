@@ -51,14 +51,10 @@ DATABASE_URL=your_database_url
 5.  Push to the branch (`git push origin feature/your-feature`).
 6.  Create a new Pull Request.
 
-> Add specific guidelines for contributing, such as coding standards, testing requirements, and code review process.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
-> Your Name - [Your Email](pujarirahulpandu@gmail.com)
-
-> Add any other relevant contact information or links.
+> Rahul Pujari - [My Email](pujarirahulpandu@gmail.com)
