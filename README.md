@@ -59,6 +59,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-> Your Name - [Your Email](mailto:your.email@example.com) - [Project Link](https://yourproject.com)
+> Your Name - [Your Email](pujarirahulpandu@gmail.com)
 
 > Add any other relevant contact information or links.
