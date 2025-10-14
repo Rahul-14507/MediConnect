@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
 
-> A brief description of MediConnect and its purpose.  What problem does it solve?  Who is the target audience?
+> This application can be used by semi-urban people who don't have access to medical facilities.
 
 ## Table of Contents
 
