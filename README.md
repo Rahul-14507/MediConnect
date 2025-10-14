@@ -20,7 +20,7 @@
 
 ## Introduction
 
-> Provide a more detailed introduction to MediConnect. Expand on its features and benefits. Include any relevant background information.
+> An application that bridges the gap between semi-urban areas and medical facilities.
 
 ## Getting Started
 
