@@ -1,0 +1,1 @@
+ALTER TABLE clinical_visits ADD `priority` text DEFAULT 'normal';

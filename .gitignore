@@ -1,0 +1,18 @@
+sqlite.db
+sqlite.db-wal
+sqlite.db-shm
+.env
+.DS_Store
+dist
+node_modules
+server/public
+<<<<<<< HEAD
+vite.config.ts.*
+*.tar.gz
+.env
+.env.local
+=======
+vite.config.ts.timestamp*
+*.tar.gz
+.vscode/
+>>>>>>> 18af9fe (fix: untrack sensitive files and update gitignore)
