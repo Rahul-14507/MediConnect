@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 ### 🏥 Administration & Management
 
