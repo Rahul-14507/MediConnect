@@ -1,12 +1,13 @@
+import { createServer } from "http";
 import { app } from "../server/index";
 import { registerRoutes } from "../server/routes";
 
-// Initialize routes lazily
+const server = createServer(app);
 let routesRegistered = false;
 
 export default async function handler(req: any, res: any) {
   if (!routesRegistered) {
-    await registerRoutes(app);
+    await registerRoutes(app, server);
     routesRegistered = true;
   }
 

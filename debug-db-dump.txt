@@ -1,0 +1,56 @@
+Total Orgs: 6
+
+{
+  "id": 1,
+  "name": "City General Hospital",
+  "type": "hospital",
+  "code": "CITY",
+  "address": "123 Health Ave, Metro City"
+}
+Code Hex: 43495459
+---
+{
+  "id": 2,
+  "name": "Green Health Pharmacy",
+  "type": "pharmacy",
+  "code": "GREEN",
+  "address": "45 Med Street"
+}
+Code Hex: 475245454e
+---
+{
+  "id": 3,
+  "name": "City Diagnostics Lab",
+  "type": "lab",
+  "code": "LAB",
+  "address": "88 Science Road"
+}
+Code Hex: 4c4142
+---
+{
+  "id": 4,
+  "name": "MediConnect HQ",
+  "type": "platform",
+  "code": "HQ",
+  "address": "1 Admin Plaza"
+}
+Code Hex: 4851
+---
+{
+  "id": 9,
+  "name": "MAMS",
+  "type": "hospital",
+  "code": "MA",
+  "address": "Bachupally"
+}
+Code Hex: 4d41
+---
+{
+  "id": 10,
+  "name": "Test MAMS",
+  "type": "hospital",
+  "code": "TESTMAMS_1770882590681",
+  "address": "123 Test St"
+}
+Code Hex: 544553544d414d535f31373730383832353930363831
+---
