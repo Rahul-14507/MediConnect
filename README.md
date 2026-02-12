@@ -6,7 +6,7 @@
 
 ## 🎥 Demo MVP
 
-Check out the MVP in action: [Watch Demo Video](https://drive.google.com/file/d/1JwmHVvlVBIPpdveRgmHFW5tTOIF9IgWO/view?usp=sharing)
+Check out the MVP in action: [Watch Demo Video](https://drive.google.com/file/d/1tQnmtIIT64XpGsSdjOulAV5GXxQkFpCy/view?usp=sharing)
 
 ---
 
