@@ -136,4 +136,4 @@ MediConnect/
 
 ---
 
-Built with ❤️ by the MediConnect Team.
+Built with ❤️ by the Radioactive Team.
